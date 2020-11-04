@@ -46,4 +46,12 @@ describe('ES6 template literal', () => {
     expect(scope.references[3].identifier.name).toBe('j');
     expect(scope.references[4].identifier.name).toBe('template');
   });
+
+  it('within arrow function nested in another literal', () => {
+    // Does not throw
+    expect(parseAndAnalyze(`const Foo = \` ${() => 'test'} \`;`)).toBeDefined();
+
+    // Throws
+    expect(parseAndAnalyze(`const Foo = \` ${() => `test`} \`;`)).toBeDefined();
+  });
 });
